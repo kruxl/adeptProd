@@ -66,6 +66,7 @@ firebase.auth().onAuthStateChanged(user => {
         if (userDetails.uid == user.uid) {
           store.dispatch('getUserData', userDetails);
           store.dispatch('setProjects');
+          store.dispatch('setFlows');
         } else {
           console.log('this is not' + " " + user.uid);
         }

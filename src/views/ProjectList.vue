@@ -47,7 +47,21 @@
                     slot="activator"
                     class="v-btn--simple"
                     color="success"
-                    to="/add-flow/"
+                    :to="`/add-flow/${item.id}`"
+                    icon
+                  >
+                    <v-icon color="primary">mdi-chart-bubble</v-icon>
+                  </v-btn>
+                  <span>4 Flows Added</span>
+                </v-tooltip>
+                <v-tooltip
+                  top
+                  content-class="top">
+                  <v-btn
+                    slot="activator"
+                    class="v-btn--simple"
+                    color="success"
+                    :to="`/add-flow/${item.id}`"
                     icon
                   >
                     <v-icon color="primary">mdi-arrange-bring-forward</v-icon>
@@ -61,6 +75,7 @@
                     slot="activator"
                     class="v-btn--simple"
                     color="success"
+                    :to="`/project-view/${item.id}`"
                     icon
                   >
                     <v-icon color="primary">mdi-airplay</v-icon>
@@ -202,10 +217,8 @@
 </template>
 
 <script>
-
 import { db } from '@/main'
 import { mapGetters } from 'vuex';
-
 export default {
   data: () => ({
     headers: [
@@ -243,7 +256,7 @@ export default {
     date2: new Date().toISOString().substr(0, 10),
     menu1: false,
     modal: false,
-    menu2: false
+    menu2: false,
   }),
   // beforeCreate: function () {
   //   this.$store.dispatch('setProjects');
@@ -296,4 +309,3 @@ export default {
   color: red !important;
 }
 </style>
-

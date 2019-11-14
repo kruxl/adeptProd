@@ -6,5 +6,8 @@ export default {
     },
     getProjects(state) {
       return state.user.projects;
+    },
+    getFlows(state) {
+      return state.user.flows;
     }
 }

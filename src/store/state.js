@@ -3,6 +3,7 @@ export default {
       loggedIn: false,
       data: null,
       userDetails: null,
-      projects: null
+      projects: null,
+      flows: null
     }
 }

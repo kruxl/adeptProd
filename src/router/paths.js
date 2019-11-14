@@ -29,7 +29,7 @@ export default [
     }
   },
   {
-    path: '/add-flow',
+    path: '/add-flow/:projectId',
     name: 'Flow Form',
     view: 'FlowForm',
     meta: {
@@ -67,7 +67,7 @@ export default [
     }
   },
   {
-    path: '/project-view',
+    path: '/project-view/:projectId',
     name: 'Project View',
     view: 'ProjectView',
     meta: {

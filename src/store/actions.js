@@ -29,5 +29,8 @@ export default {
     //   });
     setProjects(context) {
       context.commit('setProjects');
+    },
+    setFlows(context) {
+      context.commit('setFlows');
     }
 }

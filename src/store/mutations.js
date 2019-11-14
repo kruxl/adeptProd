@@ -30,5 +30,25 @@ export default {
         })
         state.user.projects = projects
       })
+    },
+    setFlows(state) {
+      let flows = []
+      firebase.firestore().collection('Flows').onSnapshot((snapshot) => {
+        flows = []
+        snapshot.forEach((doc) => {
+          flows.push({id: doc.id,
+                      startDate: doc.data().startDate,
+                      endDate: doc.data().endDate,
+                      flowHC: doc.data().flowHC,
+                      flowName: doc.data().flowName,
+                      flowCountry: doc.data().flowCountry,
+                      studentCount: doc.data().studentCount,
+                      participants: doc.data().participants,
+                      teachers: doc.data().teachers,
+                      parentProject: doc.data().parentProject
+          })
+        })
+        state.user.flows = flows
+      })
     }
 }

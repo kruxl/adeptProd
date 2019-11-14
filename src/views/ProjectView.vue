@@ -5,28 +5,60 @@
     grid-list-xl>
     <v-layout
       justify-center
-      wrap>
+      wrap
+    >
       <v-flex
         xs12
-        md8
+        md9
       >
         <material-card
           color="green"
-          title="Edit Profile"
-          text="Complete your profile"
+          title="Flows list"
+          text="Below are the flows of ProjectNmae"
         >
-          <template>
-            <v-expansion-panels>
-              <v-expansion-panel>
-                <v-expansion-panel-header>Item</v-expansion-panel-header>
-                <v-expansion-panel-content>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </v-expansion-panel-content>
-              </v-expansion-panel>
-            </v-expansion-panels>
-          </template>
+    <v-layout
+      justify-center
+      wrap
+    >
+          <v-flex
+            xs12
+            md12
+          >
+          <material-card>
+          <h4>{{getFlows}}</h4>
+          </material-card>
+          </v-flex>
+    </v-layout>
+        </material-card>
+      </v-flex>
+      <v-flex
+        xs12
+        md3
+      >
+        <material-card
+          color="warning"
+          title="Project name"
+          text="Project details"
+        >
+                  <p class="card-title font-weight-light"><v-icon small color="warning">mdi-clock-in</v-icon> Project's start date: </p>
+                  <p class="card-title font-weight-light"><v-icon small color="warning">mdi-clock-out</v-icon> Project's end date: </p>
+                  <p class="card-title font-weight-light"><v-icon small color="warning">mdi-hexagon-multiple</v-icon> Project number: </p>
         </material-card>
       </v-flex>
     </v-layout>
   </v-container>
 </template>
+
+<script>
+
+import { db } from '@/main'
+import { mapGetters } from 'vuex';
+
+export default {
+  computed: {
+    ...mapGetters([
+      "getFlows"
+    ])
+  },
+}
+</script>

@@ -48,18 +48,26 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
 
-  const currentUser = firebase.auth().currentUser;
-  console.log(currentUser);
+  // const currentUser = firebase.auth().currentUser;
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-  console.log(requiresAuth)
-  if (requiresAuth && !currentUser) {
-    next('/login');
-  } else if (requiresAuth && currentUser) {
-    next();
+  // if (requiresAuth && !currentUser) {
+  //   next('/login');
+  // } else if (requiresAuth && currentUser) {
+  //   next();
+  // } else {
+  //   next();
+  // }
+  if(requiresAuth) {
+    firebase.auth().onAuthStateChanged( (user) => {
+      if (!user) {
+        next('/login')
+      } else {
+        next();
+      }
+    })
   } else {
     next();
   }
-
 });
 
 Vue.use(Meta)

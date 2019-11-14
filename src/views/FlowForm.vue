@@ -10,7 +10,7 @@
       <v-flex xs12>
         <material-card
           color="orange"
-          title="New Flow for Dakota Rice Project"
+          :title="`New Flow for the ${setParentProject} project`"
           text="Follow the steps below to create a new Flow for this project"
         >
           <v-stepper
@@ -44,8 +44,35 @@
                         md6
                       >
                         <v-text-field
-                          v-model="flow.timeframe"
-                          label="Flow Timeframe"
+                          v-model="flow.studentCount"
+                          label="Number of Students"
+                          class="purple-input"/>
+                      </v-flex>
+                      <v-flex
+                        xs12
+                        md6
+                      >
+                        <v-text-field
+                          v-model="flow.startDate"
+                          label="Flow Start Date"
+                          class="purple-input"/>
+                      </v-flex>
+                      <v-flex
+                        xs12
+                        md6
+                      >
+                        <v-text-field
+                          v-model="flow.endDate"
+                          label="Flow End Date"
+                          class="purple-input"/>
+                      </v-flex>
+                      <v-flex
+                        xs12
+                        md6
+                      >
+                        <v-text-field
+                          v-model="flow.flowCountry"
+                          label="Flow Country"
                           class="purple-input"/>
                       </v-flex>
                       <v-flex
@@ -82,7 +109,7 @@
                 height="auto">
                 <v-flex
                   md12
-                  lg10
+                  lg11
                   py-1
                   mx-auto
                 >
@@ -119,7 +146,7 @@
                 </v-flex>
                 <v-flex
                   md12
-                  lg10
+                  lg12
                   mx-auto
                 >
                   <v-form>
@@ -202,7 +229,7 @@
                 height="auto">
                 <v-flex
                   md12
-                  lg10
+                  lg11
                   py-1
                   mx-auto
                 >
@@ -239,7 +266,7 @@
                 </v-flex>
                 <v-flex
                   md12
-                  lg10
+                  lg12
                   mx-auto
                 >
                   <v-form>
@@ -322,7 +349,7 @@
                 height="auto">
                 <v-flex
                   md12
-                  lg10
+                  lg12
                   mx-auto
                 >
                   <v-form>
@@ -407,7 +434,7 @@
                   <v-flex
                     v-if="flow.IO === 'No'"
                     md12
-                    lg8
+                    lg12
                     py-1
                   >
                     <material-card
@@ -447,7 +474,7 @@
                   <v-flex
                     v-if="flow.IO === 'No'"
                     md12
-                    lg8
+                    lg12
                     py-1
                   >
                     <material-card
@@ -501,7 +528,7 @@
                 @click="e6 = 1">Back</v-btn>
               <v-btn
                 color="success"
-                to="/project-list">Submit</v-btn>
+                @click="addFlow">Submit</v-btn>
             </v-stepper-content>
           </v-stepper>
         </material-card>
@@ -511,6 +538,8 @@
 </template>
 
 <script>
+import { db } from '@/main'
+
 export default {
   data: () => ({
     e6: 1,
@@ -560,8 +589,12 @@ export default {
       }
     ],
     flow: {
+      parentProject: '',
       name: '',
-      timeframe: '',
+      flowCountry: '',
+      startDate: '',
+      endDate: '',
+      studentCount: '',
       IO: 'No',
       hcItems: [],
       teacherItems: [],
@@ -601,6 +634,26 @@ export default {
       } else {
         this.e6 = 2
       }
+    },
+    addFlow() {
+      db.collection('Flows').add({
+        startDate: this.flow.startDate,
+        endDate: this.flow.endDate,
+        flowName: this.flow.name,
+        flowCountry: this.flow.flowCountry,
+        participants: [],
+        studentCount: this.flow.studentCount,
+        parentProject: this.setParentProject,
+        teachers: this.flow.teacherItems,
+        flowHC: this.flow.hcItems
+      }).then( () => {
+        console.log('ar fi trebuit sa adauge')
+      })
+    }
+  },
+  computed: {
+    setParentProject() {
+      return this.$route.params.projectId;
     }
   }
 }
