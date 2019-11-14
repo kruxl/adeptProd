@@ -47,7 +47,7 @@
                     slot="activator"
                     class="v-btn--simple"
                     color="success"
-                    to="/add-flow/"
+                    :to="`/add-flow/${item.id}`"
                     icon
                   >
                     <v-icon color="primary">mdi-arrange-bring-forward</v-icon>
@@ -243,7 +243,7 @@ export default {
     date2: new Date().toISOString().substr(0, 10),
     menu1: false,
     modal: false,
-    menu2: false
+    menu2: false,
   }),
   // beforeCreate: function () {
   //   this.$store.dispatch('setProjects');
