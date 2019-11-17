@@ -147,6 +147,7 @@
                   <v-textarea
                     class="purple-input"
                     label="Special Needs"
+                    v-model="newStudent.comments"
                     value=""
                     placeholder="(Optional) - add the special needs of this student if any"
                   />
@@ -158,7 +159,7 @@
                   <v-btn
                     class="mx-0 font-weight-light"
                     color="success"
-                    @click="add"
+                    @click="createStudent"
                   >
                     Add Student
                   </v-btn>
@@ -214,6 +215,7 @@ import { mapGetters } from 'vuex';
 import { mapActions } from 'vuex';
 import store from '@/store';
 import firebase from 'firebase';
+import { db } from '@/main';
 
 export default {
   data: () => ({
@@ -268,15 +270,39 @@ export default {
     }
   },
   methods: {
-    addStudent1 () {
+    addStudent () {
       this.students.push(this.newStudent)
       this.newStudent = {}
     },
     // ...mapActions({
     //   add: 'addStudent'
     // })
-    add() {
-      store.dispatch('addStudent', this.newStudent)
+    // add() {
+    //   store.dispatch('addStudent', this.newStudent)
+    // }
+    createStudent() {
+      db.collection('newUsers').add({
+        email: this.newStudent.email,
+        firstName: this.newStudent.firstName,
+        lastName: this.newStudent.lastName,
+        gender: this.newStudent.gender,
+        sendingOrg: this.newStudent.org,
+        password: this.newStudent.password,
+        phone: this.newStudent.phone,
+        dateOfBirth: this.newStudent.dateOfBirth,
+        flow: this.newStudent.flow,
+        spec: this.newStudent.spec,
+        competencies: this.newStudent.competencies,
+        comments: this.newStudent.comments,
+        io: false,
+        teacher: false,
+        admin: false,
+        student: true
+      }).then(() => {
+        this.students.push(this.newStudent)
+        this.newStudent = {}
+        store.dispatch('addStudent')
+      })
     }
   },
   computed: {

@@ -16,7 +16,7 @@
           title="Login"
           text="Enter your email and password below"
         >
-          <v-form>
+          <v-form v-on:submit.prevent="prev">
             <v-container py-0>
               <v-layout wrap>
                 <v-flex
@@ -37,6 +37,7 @@
                     label="Password"
                     class="purple-input"
                     v-model="form.password"
+                    :type="'password'"
                     />
                 </v-flex>
                 <v-flex
@@ -82,8 +83,11 @@ export default {
                this.$router.replace({ name : "Dashboard" });
             })
             .catch(err => {
-               this.error = err.message;
+               alert(err.message);
             });
+      },
+      prev(){
+
       }
   }
 }

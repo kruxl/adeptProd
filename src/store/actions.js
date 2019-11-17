@@ -28,7 +28,10 @@ export default {
     setFlows(context) {
       context.commit('setFlows');
     },
-    addStudent({ commit }, data) {
-      commit('addStudent', data);
-    },
+    // addStudent({ commit }, data) {
+    //   commit('addStudent', data);
+    // },
+    addStudent(context) {
+      context.commit('addStudent');
+    }
 }

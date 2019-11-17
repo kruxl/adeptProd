@@ -51,26 +51,30 @@ export default {
         state.user.flows = flows
       })
     },
-    addStudent(state, data) {
+    addStudent(state) {
       let students = [];
-      console.log(data)
-      secondaryAuthApp.auth().createUserWithEmailAndPassword(data.email, data.password)
-              .then(cred => {
-                students.push(cred.user.uid)
-                return firebase.firestore().collection('users').doc(cred.user.uid).set({
-                  uid: cred.user.uid,
-                  admin: false,
-                  teacher: false,
-                  io: false,
-                  student: true,
-                  firstName: data.firstName,
-                  lastName: data.lastName
-                });
-              })
-              .then(() => {
-                secondaryAuthApp.auth().signOut();
-                console.log('a mers sa adaug')
-              });
-      state.user.myAddedStudents = students
+      // firebase.firestore().collection('users').onSnapshot((snapshot) => {
+      //   students = []
+        // console.log(snapshot)
+        // for(let i=0; i < snapshot.lenght; i++) {
+        //   if (snapshot[i].data().student) {
+        //     students.push(snapshot[i].data().uid)
+        //   }
+        // }
+        // snapshot.forEach(doc => {
+        //   const data = doc.data();
+        //   if (data.student) {
+        //     students.push(data.uid)
+        //   }
+        // })
+      // })
+      firebase.firestore().collection('users').where("student", "==", true).get().then((snapshot) => {
+        snapshot.forEach(doc => {
+          const std = doc.data();
+          students.push(std);
+        })
+      })
+      // state.user.myAddedStudents = students
+      console.log(state.user)
     }
 }
