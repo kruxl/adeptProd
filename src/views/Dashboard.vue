@@ -510,7 +510,7 @@ export default {
           school: 'Chilumba Boys'
         }
       ],
-      tabs: 0,
+      tabs: null,
       list: {
         0: false,
         1: false,

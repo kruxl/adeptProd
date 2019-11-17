@@ -16,4 +16,7 @@
 .v-datatable thead th.column.sortable i {
   vertical-align: unset;
 }
+// .flow__card {
+//   margin-top: 25px !important;
+// }
 </style>

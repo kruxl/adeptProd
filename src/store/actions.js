@@ -22,15 +22,13 @@ export default {
     removeUser({ commit }, userDetails) {
       commit('removeUser');
     },
-    // setProjects({ commit }, projects) {
-    //   commit('setProjects', {
-    //     // isAdmin: userDetails.admin,
-    //     projects: projects[]
-    //   });
     setProjects(context) {
       context.commit('setProjects');
     },
     setFlows(context) {
       context.commit('setFlows');
-    }
+    },
+    addStudent({ commit }, data) {
+      commit('addStudent', data);
+    },
 }

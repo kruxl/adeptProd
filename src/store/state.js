@@ -4,6 +4,7 @@ export default {
       data: null,
       userDetails: null,
       projects: null,
-      flows: null
+      flows: null,
+      myAddedStudents: null,
     }
 }

@@ -50,5 +50,27 @@ export default {
         })
         state.user.flows = flows
       })
+    },
+    addStudent(state, data) {
+      let students = [];
+      console.log(data)
+      secondaryAuthApp.auth().createUserWithEmailAndPassword(data.email, data.password)
+              .then(cred => {
+                students.push(cred.user.uid)
+                return firebase.firestore().collection('users').doc(cred.user.uid).set({
+                  uid: cred.user.uid,
+                  admin: false,
+                  teacher: false,
+                  io: false,
+                  student: true,
+                  firstName: data.firstName,
+                  lastName: data.lastName
+                });
+              })
+              .then(() => {
+                secondaryAuthApp.auth().signOut();
+                console.log('a mers sa adaug')
+              });
+      state.user.myAddedStudents = students
     }
 }

@@ -52,6 +52,7 @@ const configOptions = {
 // init firebase
 
 firebase.initializeApp(configOptions);
+const secondaryAuthApp = firebase.initializeApp(configOptions, "secondary");
 
 export const db = firebase.firestore();
 

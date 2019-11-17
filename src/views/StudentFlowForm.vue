@@ -21,11 +21,58 @@
               <v-layout wrap>
                 <v-flex
                   xs12
-                  md6
+                  md4
                 >
                   <v-text-field
-                    v-model="newStudent.name"
-                    label="Student Name"
+                    v-model="newStudent.firstName"
+                    label="First Name"
+                    class="purple-input"/>
+                </v-flex>                
+                <v-flex
+                  xs12
+                  md4
+                >
+                  <v-text-field
+                    v-model="newStudent.lastName"
+                    label="Last Name"
+                    class="purple-input"/>
+                </v-flex>
+                <v-flex
+                  xs12
+                  md4
+                >
+                  <v-select
+                    :items="gender"
+                    v-model="newStudent.gender"
+                    label="Gender"
+                    required
+                    class="purple-input"/>
+                </v-flex>
+                <v-flex
+                  xs12
+                  md4
+                >
+                  <v-text-field
+                    v-model="newStudent.email"
+                    label="Email Address"
+                    class="purple-input"/>
+                </v-flex>
+                <v-flex
+                  xs12
+                  md4
+                >
+                  <v-text-field
+                    v-model="newStudent.phone"
+                    label="Phone Number"
+                    class="purple-input"/>
+                </v-flex>
+                <v-flex
+                  xs12
+                  md4
+                >
+                  <v-text-field
+                    v-model="newStudent.dateOfBirth"
+                    label="Date of Birth"
                     class="purple-input"/>
                 </v-flex>
                 <v-flex
@@ -33,7 +80,7 @@
                   md6
                 >
                   <v-select
-                    :items="flowList"
+                    :items="flowListNames"
                     v-model="newStudent.flow"
                     label="Flow"
                     required
@@ -44,9 +91,9 @@
                   md6
                 >
                   <v-text-field
-                    v-model="newStudent.school"
+                    v-model="newStudent.org"
                     class="purple-input"
-                    label="School"
+                    label="Sending Organization"
                   />
                 </v-flex>
                 <v-flex
@@ -54,9 +101,20 @@
                   md6
                 >
                   <v-text-field
-                    v-model="newStudent.email"
-                    label="Email Address"
-                    class="purple-input"/>
+                    v-model="newStudent.spec"
+                    class="purple-input"
+                    label="Specialization"
+                  />
+                </v-flex>
+                <v-flex
+                  xs12
+                  md6
+                >
+                  <v-text-field
+                    v-model="newStudent.address"
+                    class="purple-input"
+                    label="Home Address"
+                  />
                 </v-flex>
                 <v-flex
                   xs12
@@ -88,9 +146,9 @@
                 <v-flex xs12>
                   <v-textarea
                     class="purple-input"
-                    label="Comments"
+                    label="Special Needs"
                     value=""
-                    placeholder="(Optional) - add your comments about this student"
+                    placeholder="(Optional) - add the special needs of this student if any"
                   />
                 </v-flex>
                 <v-flex
@@ -100,7 +158,7 @@
                   <v-btn
                     class="mx-0 font-weight-light"
                     color="success"
-                    @click="addStudent"
+                    @click="add"
                   >
                     Add Student
                   </v-btn>
@@ -137,8 +195,8 @@
               slot="items"
               slot-scope="{ item }"
             >
-              <td>{{ item.name }}</td>
-              <td>{{ item.school }}</td>
+              <td>{{ item.firstName }} {{ item.lastName }}</td>
+              <td>{{ item.org }}</td>
               <td>{{ item.email }}</td>
               <td>{{ item.flow }}</td>
               <td><v-icon color="success">mdi-pencil</v-icon></td>
@@ -151,6 +209,12 @@
 </template>
 
 <script>
+
+import { mapGetters } from 'vuex';
+import { mapActions } from 'vuex';
+import store from '@/store';
+import firebase from 'firebase';
+
 export default {
   data: () => ({
     headers: [
@@ -178,15 +242,23 @@ export default {
     comps: ['Communication', 'Collaboration', 'Punctuality', 'Leadership'],
     search: null,
     newStudent: {
-      name: '',
-      school: '',
+      firstName: '',
+      lastName: '',
+      gender: '',
       email: '',
+      phone: '',
+      dateOfBirth: '',
       flow: '',
+      org: '',
+      spec: '',
+      address: '',
       competencies: [],
-      comments: ''
+      comments: '',
+      password: 'parola'
     },
     students: [],
-    flowList: ['Dakota Rice', 'Bucharest Starbucks']
+    flowList: ['Dakota Rice', 'Bucharest Starbucks'],
+    gender: ['male', 'female', 'other']
   }),
   watch: {
     model (val) {
@@ -196,9 +268,28 @@ export default {
     }
   },
   methods: {
-    addStudent () {
+    addStudent1 () {
       this.students.push(this.newStudent)
       this.newStudent = {}
+    },
+    // ...mapActions({
+    //   add: 'addStudent'
+    // })
+    add() {
+      store.dispatch('addStudent', this.newStudent)
+    }
+  },
+  computed: {
+    ...mapGetters([
+      "getFlows"
+    ]),
+    flowListNames() {
+      const data = this.getFlows;
+      const flowNames = [];
+      data.forEach((a) => {
+        flowNames.push(a.flowName)
+      });
+      return flowNames;
     }
   }
 }

@@ -9,5 +9,8 @@ export default {
     },
     getFlows(state) {
       return state.user.flows;
+    },
+    getStudents(state) {
+      return state.user.myAddedStudents;
     }
 }
